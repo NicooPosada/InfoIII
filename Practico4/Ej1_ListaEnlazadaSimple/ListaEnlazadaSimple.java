@@ -5,7 +5,7 @@ Escribe una clase Nodo que almacene un número entero y un puntero al siguiente 
 ● Imprime la lista completa.
  */
 
-package Practico4;
+package Practico4.Ej1_ListaEnlazadaSimple;
 
 // Clase Nodo
 class Nodo {

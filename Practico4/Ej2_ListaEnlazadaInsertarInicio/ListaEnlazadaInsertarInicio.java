@@ -5,7 +5,7 @@ Implementa el método insertarInicio(int dato) en la clase ListaEnlazada.
 ● Imprime la lista para verificar que el orden sea correcto.
  */
 
-package Practico4;
+package Practico4.Ej2_ListaEnlazadaInsertarInicio;
 
 // Clase Nodo
 class Nodo {
