@@ -1,3 +1,8 @@
+/*Ejercicio 1 – Implementación de Pila
+Implemente una clase PilaArreglo en Java utilizando un arreglo.
+Métodos: push(int dato), pop(), top(), isEmpty(), isFull().
+Pruebe apilando los enteros 10, 20, 30, 40 y desapilando dos.*/
+
 package Practico3;
 
 public class Ej1 {

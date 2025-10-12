@@ -1,3 +1,10 @@
+/* 
+Ejercicio 2 – Implementación de Cola
+Implemente una clase ColaArreglo en Java utilizando un arreglo.
+Métodos: enqueue(int dato), dequeue(), top(), isEmpty(), isFull().
+Pruebe encolando los enteros 1, 2, 3, 4 y desencolando uno.
+ */
+
 package Practico3;
 
 public class ColaArreglo {
