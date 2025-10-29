@@ -215,7 +215,7 @@ class RBTree6<K extends Comparable<K>, V> {
     private void printTree(RBNode6<K, V> node, String prefix, boolean isTail) {
         if (node != NIL) {
             System.out.println(prefix + (isTail ? "└── " : "├── ") + 
-                             node.key + ":" + (node.color == RBNode6.RED ? "R" : "N"));
+                             node.key + "(" + node.value + "):" + (node.color == RBNode6.RED ? "R" : "N"));
             
             if (node.left != NIL || node.right != NIL) {
                 printTree(node.left, prefix + (isTail ? "    " : "│   "), false);

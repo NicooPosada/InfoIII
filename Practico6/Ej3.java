@@ -10,6 +10,7 @@ package Practico6;
 // Clase que representa un nodo del árbol rojo-negro
 class RBNode3<K, V> {
     K key;
+    @SuppressWarnings("unused")
     V value;
     boolean color; // true = ROJO, false = NEGRO
     RBNode3<K, V> left;
