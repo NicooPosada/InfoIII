@@ -13,7 +13,7 @@ int peek();
 boolean isEmpty();
 
 Probá agregar los valores: 20, 5, 15, 3, 11 y mostrálos en orden de extracción.
-
+cd "/home/fabricio-posada/InfoIII/Monticulo Binario" && javac Ej1.java && java Ej1
 */
 
 public class Ej1 {
