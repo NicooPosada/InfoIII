@@ -1,29 +1,13 @@
-package gestion_pizzeria.src;
-
-import java.util.List;
-
 public class TiempoOrdenamiento {
 
-    private Ordenador ordenador = new Ordenador();
-
-    public long medirInsercion(List<Pedido> pedidos) {
+    public static long medir(Runnable algoritmo) {
         long inicio = System.nanoTime();
-        ordenador.insercionPorTiempo(pedidos);
+        algoritmo.run();
         long fin = System.nanoTime();
-        return (fin - inicio);
+        return (fin - inicio) / 1_000_000; // milisegundos
     }
 
-    public long medirShellsort(List<Pedido> pedidos) {
-        long inicio = System.nanoTime();
-        ordenador.shellsortPorPrecio(pedidos);
-        long fin = System.nanoTime();
-        return (fin - inicio);
-    }
-
-    public long medirQuicksort(List<Pedido> pedidos) {
-        long inicio = System.nanoTime();
-        ordenador.quicksortPorNombre(pedidos, 0, pedidos.size() - 1);
-        long fin = System.nanoTime();
-        return (fin - inicio);
+    public static void mostrarTiempo(String nombreAlgoritmo, long tiempo) {
+        System.out.println(nombreAlgoritmo + " completado en " + tiempo + " ms");
     }
 }

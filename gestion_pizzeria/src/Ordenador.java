@@ -1,11 +1,9 @@
-package gestion_pizzeria.src;
-
 import java.util.List;
 
 public class Ordenador {
 
-    // Inserción: ordena por tiempo de preparación
-    public void insercionPorTiempo(List<Pedido> pedidos) {
+    // 1️⃣ Ordenamiento por tiempo de preparación - Inserción
+    public void ordenPorTiempoInsercion(List<Pedido> pedidos) {
         for (int i = 1; i < pedidos.size(); i++) {
             Pedido actual = pedidos.get(i);
             int j = i - 1;
@@ -17,8 +15,8 @@ public class Ordenador {
         }
     }
 
-    // Shellsort: ordena por precio total
-    public void shellsortPorPrecio(List<Pedido> pedidos) {
+    // 2️⃣ Ordenamiento por precio - Shellsort
+    public void ordenPorPrecioShell(List<Pedido> pedidos) {
         int n = pedidos.size();
         for (int gap = n / 2; gap > 0; gap /= 2) {
             for (int i = gap; i < n; i++) {
@@ -32,20 +30,20 @@ public class Ordenador {
         }
     }
 
-    // Quicksort: ordena alfabéticamente por nombre
-    public void quicksortPorNombre(List<Pedido> pedidos, int low, int high) {
-        if (low < high) {
-            int pi = particion(pedidos, low, high);
-            quicksortPorNombre(pedidos, low, pi - 1);
-            quicksortPorNombre(pedidos, pi + 1, high);
+    // 3️⃣ Ordenamiento por nombre - Quicksort
+    public void ordenPorNombreQuick(List<Pedido> pedidos, int inicio, int fin) {
+        if (inicio < fin) {
+            int indiceParticion = particion(pedidos, inicio, fin);
+            ordenPorNombreQuick(pedidos, inicio, indiceParticion - 1);
+            ordenPorNombreQuick(pedidos, indiceParticion + 1, fin);
         }
     }
 
-    private int particion(List<Pedido> pedidos, int low, int high) {
-        Pedido pivote = pedidos.get(high);
-        int i = low - 1;
-        for (int j = low; j < high; j++) {
-            if (pedidos.get(j).getNombreCliente().compareToIgnoreCase(pivote.getNombreCliente()) <= 0) {
+    private int particion(List<Pedido> pedidos, int inicio, int fin) {
+        Pedido pivote = pedidos.get(fin);
+        int i = inicio - 1;
+        for (int j = inicio; j < fin; j++) {
+            if (pedidos.get(j).getNombreCliente().compareToIgnoreCase(pivote.getNombreCliente()) < 0) {
                 i++;
                 Pedido temp = pedidos.get(i);
                 pedidos.set(i, pedidos.get(j));
@@ -53,8 +51,8 @@ public class Ordenador {
             }
         }
         Pedido temp = pedidos.get(i + 1);
-        pedidos.set(i + 1, pedidos.get(high));
-        pedidos.set(high, temp);
+        pedidos.set(i + 1, pedidos.get(fin));
+        pedidos.set(fin, temp);
         return i + 1;
     }
 }

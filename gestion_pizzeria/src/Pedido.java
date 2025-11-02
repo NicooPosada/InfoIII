@@ -1,9 +1,7 @@
-package gestion_pizzeria.src;
-
 public class Pedido {
-    private String nombreCliente;
+    private final String nombreCliente;
     private double precioTotal;
-    private int tiempoPreparacion; // en minutos
+    private int tiempoPreparacion; // minutos
 
     public Pedido(String nombreCliente, double precioTotal, int tiempoPreparacion) {
         this.nombreCliente = nombreCliente;
@@ -15,20 +13,16 @@ public class Pedido {
         return nombreCliente;
     }
 
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
-    }
-
     public double getPrecioTotal() {
         return precioTotal;
     }
 
-    public void setPrecioTotal(double precioTotal) {
-        this.precioTotal = precioTotal;
-    }
-
     public int getTiempoPreparacion() {
         return tiempoPreparacion;
+    }
+
+    public void setPrecioTotal(double precioTotal) {
+        this.precioTotal = precioTotal;
     }
 
     public void setTiempoPreparacion(int tiempoPreparacion) {

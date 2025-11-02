@@ -1,17 +1,11 @@
-package gestion_pizzeria.src;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Pizzeria {
-    private List<Pedido> pedidos;
+    private final List<Pedido> pedidos = new ArrayList<>();
 
-    public Pizzeria() {
-        pedidos = new ArrayList<>();
-    }
-
-    public void agregarPedido(Pedido pedido) {
-        pedidos.add(pedido);
+    public void agregarPedido(Pedido p) {
+        pedidos.add(p);
     }
 
     public void eliminarPedido(String nombreCliente) {
@@ -23,6 +17,12 @@ public class Pizzeria {
     }
 
     public void mostrarPedidos() {
-        pedidos.forEach(System.out::println);
+        if (pedidos.isEmpty()) {
+            System.out.println("\nNo hay pedidos registrados.");
+            return;
+        }
+        for (Pedido p : pedidos) {
+            System.out.println(p);
+        }
     }
 }
