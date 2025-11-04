@@ -78,7 +78,7 @@ class ArbolAVL9 {
 
     private NodoAVL9 insertarRecursivo(NodoAVL9 nodo, int valor) {
         operaciones++;
-        
+
         if (nodo == null) {
             return new NodoAVL9(valor);
         }
@@ -120,7 +120,7 @@ class ArbolAVL9 {
 
     private boolean buscarRecursivo(NodoAVL9 nodo, int valor) {
         operaciones++;
-        
+
         if (nodo == null) {
             return false;
         }
@@ -146,7 +146,8 @@ class ArbolAVL9 {
     }
 
     private int contarNodos(NodoAVL9 nodo) {
-        if (nodo == null) return 0;
+        if (nodo == null)
+            return 0;
         return 1 + contarNodos(nodo.izquierdo) + contarNodos(nodo.derecho);
     }
 }
@@ -163,7 +164,7 @@ class ArbolABB9 {
 
     private NodoABB insertarRecursivo(NodoABB nodo, int valor) {
         operaciones++;
-        
+
         if (nodo == null) {
             return new NodoABB(valor);
         }
@@ -184,7 +185,7 @@ class ArbolABB9 {
 
     private boolean buscarRecursivo(NodoABB nodo, int valor) {
         operaciones++;
-        
+
         if (nodo == null) {
             return false;
         }
@@ -206,7 +207,8 @@ class ArbolABB9 {
     }
 
     private int calcularAltura(NodoABB nodo) {
-        if (nodo == null) return 0;
+        if (nodo == null)
+            return 0;
         return 1 + Math.max(calcularAltura(nodo.izquierdo), calcularAltura(nodo.derecho));
     }
 
@@ -215,7 +217,8 @@ class ArbolABB9 {
     }
 
     private int contarNodos(NodoABB nodo) {
-        if (nodo == null) return 0;
+        if (nodo == null)
+            return 0;
         return 1 + contarNodos(nodo.izquierdo) + contarNodos(nodo.derecho);
     }
 }
@@ -225,13 +228,9 @@ public class Ej9 {
         System.out.println("=== ANÁLISIS DE COMPLEJIDAD: ÁRBOLES AVL ===\n");
 
         // PARTE A: Demostración de que la altura del AVL es O(log n)
-        System.out.println("╔═══════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║  A) DEMOSTRACIÓN: Altura del AVL es O(log n)                        ║");
-        System.out.println("╚═══════════════════════════════════════════════════════════════════════╝\n");
-
+        System.out.println("A) DEMOSTRACIÓN: Altura del AVL es O(log n)");
         System.out.println("TEOREMA: Un árbol AVL con n nodos tiene altura h ≤ 1.44 log₂(n)");
-        System.out.println("\nDEMOSTRACIÓN INFORMAL:");
-        System.out.println("─────────────────────");
+        System.out.println("\nDEMOSTRACIÓN INFORMAL:\n");
         System.out.println("1. El factor de balance en cada nodo es |FB| ≤ 1");
         System.out.println("2. Esto significa que la diferencia entre subárboles es como máximo 1");
         System.out.println("3. El peor caso es cuando cada nivel tiene el mínimo de nodos posible");
@@ -243,7 +242,7 @@ public class Ej9 {
         System.out.println("   N(h) ≈ φʰ (donde φ = (1+√5)/2 ≈ 1.618)");
         System.out.println("\n6. Despejando h:");
         System.out.println("   h ≈ log_φ(n) = log₂(n) / log₂(φ) ≈ 1.44 log₂(n)");
-        System.out.println("\nCONCLUSIÓN: h = O(log n) ✓");
+        System.out.println("\nCONCLUSIÓN: h = O(log n)");
 
         // Demostración empírica
         System.out.println("\n\nDEMOSTRACIÓN EMPÍRICA:");
@@ -251,8 +250,8 @@ public class Ej9 {
         System.out.println("│   n    │ Altura  │  log₂(n)  │  h/log₂(n)   │");
         System.out.println("├────────┼─────────┼───────────┼──────────────┤");
 
-        int[] tamanios = {10, 50, 100, 500, 1000, 5000, 10000};
-        
+        int[] tamanios = { 10, 50, 100, 500, 1000, 5000, 10000 };
+
         for (int n : tamanios) {
             ArbolAVL9 avl = new ArbolAVL9();
             for (int i = 1; i <= n; i++) {
@@ -261,34 +260,30 @@ public class Ej9 {
             int altura = avl.getAltura();
             double log2n = Math.log(n) / Math.log(2);
             double ratio = altura / log2n;
-            
-            System.out.printf("│ %6d │ %7d │ %9.2f │ %12.3f │%n", 
-                            n, altura, log2n, ratio);
+
+            System.out.printf("│ %6d │ %7d │ %9.2f │ %12.3f │%n",
+                    n, altura, log2n, ratio);
         }
         System.out.println("└────────┴─────────┴───────────┴──────────────┘");
-        System.out.println("Observación: El ratio h/log₂(n) ≈ 1.44 (constante) ✓");
+        System.out.println("Observación: El ratio h/log₂(n) ≈ 1.44 (constante)");
 
         // PARTE B: Por qué garantiza O(log n) en operaciones
-        System.out.println("\n\n╔═══════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║  B) ¿Por qué h = O(log n) garantiza operaciones en O(log n)?        ║");
-        System.out.println("╚═══════════════════════════════════════════════════════════════════════╝\n");
-
+        System.out.println("\nB) ¿Por qué h = O(log n) garantiza operaciones en O(log n)?\n");
         System.out.println("EXPLICACIÓN:");
-        System.out.println("─────────────");
         System.out.println("1. BÚSQUEDA:");
         System.out.println("   - En el peor caso, recorremos desde la raíz hasta una hoja");
         System.out.println("   - Cantidad de comparaciones = altura del árbol = h");
-        System.out.println("   - Como h = O(log n), búsqueda = O(log n) ✓");
+        System.out.println("   - Como h = O(log n), búsqueda = O(log n)");
         System.out.println("\n2. INSERCIÓN:");
         System.out.println("   - Paso 1: Insertar como BST = O(h) = O(log n)");
         System.out.println("   - Paso 2: Actualizar alturas subiendo = O(h) = O(log n)");
         System.out.println("   - Paso 3: Rotaciones (máximo 2) = O(1)");
-        System.out.println("   - Total: O(log n) + O(log n) + O(1) = O(log n) ✓");
+        System.out.println("   - Total: O(log n) + O(log n) + O(1) = O(log n)");
         System.out.println("\n3. ELIMINACIÓN:");
         System.out.println("   - Paso 1: Buscar nodo = O(log n)");
         System.out.println("   - Paso 2: Eliminar = O(1)");
         System.out.println("   - Paso 3: Rebalancear subiendo = O(log n)");
-        System.out.println("   - Total: O(log n) ✓");
+        System.out.println("   - Total: O(log n)");
 
         // Demostración empírica de búsqueda
         System.out.println("\n\nDEMOSTRACIÓN EMPÍRICA (Búsqueda):");
@@ -296,28 +291,25 @@ public class Ej9 {
         System.out.println("│   n    │ Operaciones  │  log₂(n)  │  Ops/log₂(n)     │");
         System.out.println("├────────┼──────────────┼───────────┼──────────────────┤");
 
-        for (int n : new int[]{100, 500, 1000, 5000, 10000}) {
+        for (int n : new int[] { 100, 500, 1000, 5000, 10000 }) {
             ArbolAVL9 avl = new ArbolAVL9();
             for (int i = 1; i <= n; i++) {
                 avl.insertar(i);
             }
-            
+
             // Buscar el último elemento (peor caso)
             avl.buscar(n);
             int ops = avl.getOperaciones();
             double log2n = Math.log(n) / Math.log(2);
             double ratio = ops / log2n;
-            
-            System.out.printf("│ %6d │ %12d │ %9.2f │ %16.3f │%n", 
-                            n, ops, log2n, ratio);
+
+            System.out.printf("│ %6d │ %12d │ %9.2f │ %16.3f │%n",
+                    n, ops, log2n, ratio);
         }
         System.out.println("└────────┴──────────────┴───────────┴──────────────────┘");
 
         // PARTE C: Comparación con ABB sin balance y Rojo-Negro
-        System.out.println("\n\n╔═══════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║  C) COMPARACIÓN: AVL vs ABB sin balance vs Rojo-Negro               ║");
-        System.out.println("╚═══════════════════════════════════════════════════════════════════════╝\n");
-
+        System.out.println("\nC) COMPARACIÓN: AVL vs ABB sin balance vs Rojo-Negro\n");
         System.out.println("┌──────────────────────┬─────────────┬─────────────┬─────────────┐");
         System.out.println("│   Característica     │     AVL     │  Rojo-Negro │  ABB Simple │");
         System.out.println("├──────────────────────┼─────────────┼─────────────┼─────────────┤");
@@ -332,7 +324,6 @@ public class Ej9 {
         System.out.println("└──────────────────────┴─────────────┴─────────────┴─────────────┘");
 
         System.out.println("\nANÁLISIS CONCEPTUAL:");
-        System.out.println("────────────────────");
         System.out.println("\n1. ABB SIN BALANCE:");
         System.out.println("   ✗ Altura puede ser O(n) en el peor caso (inserción ordenada)");
         System.out.println("   ✗ Operaciones degradan a O(n) en el peor caso");
@@ -363,32 +354,29 @@ public class Ej9 {
         System.out.println("│   n    │ Altura AVL  │ Altura ABB  │  ABB/AVL Ratio   │");
         System.out.println("├────────┼─────────────┼─────────────┼──────────────────┤");
 
-        for (int n : new int[]{10, 50, 100, 500, 1000}) {
+        for (int n : new int[] { 10, 50, 100, 500, 1000 }) {
             ArbolAVL9 avl = new ArbolAVL9();
             ArbolABB9 abb = new ArbolABB9();
-            
+
             // Inserción ordenada (peor caso para ABB)
             for (int i = 1; i <= n; i++) {
                 avl.insertar(i);
                 abb.insertar(i);
             }
-            
+
             int alturaAVL = avl.getAltura();
             int alturaABB = abb.getAltura();
             double ratio = (double) alturaABB / alturaAVL;
-            
-            System.out.printf("│ %6d │ %11d │ %11d │ %16.2f │%n", 
-                            n, alturaAVL, alturaABB, ratio);
+
+            System.out.printf("│ %6d │ %11d │ %11d │ %16.2f │%n",
+                    n, alturaAVL, alturaABB, ratio);
         }
         System.out.println("└────────┴─────────────┴─────────────┴──────────────────┘");
         System.out.println("Observación: ABB degenera en lista (altura = n)");
-        System.out.println("            AVL mantiene altura logarítmica ✓");
+        System.out.println("            AVL mantiene altura logarítmica");
 
         // RESUMEN FINAL
-        System.out.println("\n\n╔═══════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║  RESUMEN Y CONCLUSIONES                                              ║");
-        System.out.println("╚═══════════════════════════════════════════════════════════════════════╝\n");
-
+        System.out.println("\nRESUMEN Y CONCLUSIONES \n");
         System.out.println("1. AVL garantiza h = O(log n) mediante balance estricto (|FB| ≤ 1)");
         System.out.println("\n2. h = O(log n) → todas las operaciones son O(log n) porque:");
         System.out.println("   - Búsqueda recorre máximo h nodos");

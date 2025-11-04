@@ -54,7 +54,7 @@ class ArbolAVL10 {
     private NodoAVL10 rotacionDerecha(NodoAVL10 n) {
         totalRotaciones++;
         rotacionesSimples++;
-        
+
         NodoAVL10 x = n.izquierdo;
         NodoAVL10 B = x.derecho;
 
@@ -71,7 +71,7 @@ class ArbolAVL10 {
     private NodoAVL10 rotacionIzquierda(NodoAVL10 n) {
         totalRotaciones++;
         rotacionesSimples++;
-        
+
         NodoAVL10 y = n.derecho;
         NodoAVL10 B = y.izquierdo;
 
@@ -183,7 +183,7 @@ class ArbolAVL10 {
     public boolean esOrdenCreciente() {
         List<Integer> valores = new ArrayList<>();
         inordenParaLista(raiz, valores);
-        
+
         for (int i = 1; i < valores.size(); i++) {
             if (valores.get(i) <= valores.get(i - 1)) {
                 return false;
@@ -213,13 +213,15 @@ class ArbolAVL10 {
         }
 
         int alturaIzq = verificarAlturas(nodo.izquierdo);
-        if (alturaIzq == -1) return -1;
+        if (alturaIzq == -1)
+            return -1;
 
         int alturaDer = verificarAlturas(nodo.derecho);
-        if (alturaDer == -1) return -1;
+        if (alturaDer == -1)
+            return -1;
 
         int alturaCalculada = 1 + Math.max(alturaIzq, alturaDer);
-        
+
         if (nodo.altura != alturaCalculada) {
             return -1; // Error
         }
@@ -256,7 +258,8 @@ class ArbolAVL10 {
     }
 
     private int contarNodos(NodoAVL10 nodo) {
-        if (nodo == null) return 0;
+        if (nodo == null)
+            return 0;
         return 1 + contarNodos(nodo.izquierdo) + contarNodos(nodo.derecho);
     }
 
@@ -266,9 +269,9 @@ class ArbolAVL10 {
 
     private void mostrarArbol(NodoAVL10 nodo, String prefijo, boolean esUltimo) {
         if (nodo != null) {
-            System.out.println(prefijo + (esUltimo ? "└── " : "├── ") + 
-                             nodo.valor + " (h=" + nodo.altura + ", FB=" + factorBalance(nodo) + ")");
-            
+            System.out.println(prefijo + (esUltimo ? "└── " : "├── ") +
+                    nodo.valor + " (h=" + nodo.altura + ", FB=" + factorBalance(nodo) + ")");
+
             if (nodo.izquierdo != null || nodo.derecho != null) {
                 mostrarArbol(nodo.izquierdo, prefijo + (esUltimo ? "    " : "│   "), false);
                 mostrarArbol(nodo.derecho, prefijo + (esUltimo ? "    " : "│   "), true);
@@ -296,9 +299,7 @@ class ResultadoVerificacion {
 
 public class Ej10 {
     public static void main(String[] args) {
-        System.out.println("═══════════════════════════════════════════════════════════════════");
-        System.out.println("  PRUEBAS EXHAUSTIVAS: SECUENCIAS ESTRESANTES PARA AVL");
-        System.out.println("═══════════════════════════════════════════════════════════════════\n");
+        System.out.println("\nPRUEBAS EXHAUSTIVAS: SECUENCIAS ESTRESANTES PARA AVL\n");
 
         // Generar las 3 secuencias
         int[] secuenciaCreciente = generarSecuenciaCreciente(20);
@@ -306,7 +307,6 @@ public class Ej10 {
         int[] secuenciaAleatoria = generarSecuenciaAleatoria(20);
 
         System.out.println("SECUENCIAS GENERADAS:");
-        System.out.println("─────────────────────");
         System.out.print("1. Creciente:    ");
         imprimirArreglo(secuenciaCreciente);
         System.out.print("2. Decreciente:  ");
@@ -315,43 +315,34 @@ public class Ej10 {
         imprimirArreglo(secuenciaAleatoria);
 
         // Probar cada secuencia
-        System.out.println("\n\n╔═══════════════════════════════════════════════════════════════════╗");
-        System.out.println("║  PRUEBA 1: SECUENCIA CRECIENTE (peor caso para ABB sin balance) ║");
-        System.out.println("╚═══════════════════════════════════════════════════════════════════╝");
+        System.out.println("\nPRUEBA 1: SECUENCIA CRECIENTE (peor caso para ABB sin balance)\n");
         probarSecuencia(secuenciaCreciente, "CRECIENTE");
 
-        System.out.println("\n\n╔═══════════════════════════════════════════════════════════════════╗");
-        System.out.println("║  PRUEBA 2: SECUENCIA DECRECIENTE                                 ║");
-        System.out.println("╚═══════════════════════════════════════════════════════════════════╝");
+        System.out.println("\nPRUEBA 2: SECUENCIA DECRECIENTE\n");
         probarSecuencia(secuenciaDecreciente, "DECRECIENTE");
 
-        System.out.println("\n\n╔═══════════════════════════════════════════════════════════════════╗");
-        System.out.println("║  PRUEBA 3: SECUENCIA ALEATORIA CON REPETIDOS                     ║");
-        System.out.println("╚═══════════════════════════════════════════════════════════════════╝");
+        System.out.println("\nPRUEBA 3: SECUENCIA ALEATORIA CON REPETIDOS\n");
         probarSecuencia(secuenciaAleatoria, "ALEATORIA");
 
         // Resumen comparativo
-        System.out.println("\n\n╔═══════════════════════════════════════════════════════════════════╗");
-        System.out.println("║  RESUMEN COMPARATIVO                                             ║");
-        System.out.println("╚═══════════════════════════════════════════════════════════════════╝\n");
+        System.out.println("\nRESUMEN COMPARATIVO\n");
 
         System.out.println("┌──────────────┬─────────┬──────────┬───────────┬──────────────┐");
         System.out.println("│  Secuencia   │  Nodos  │  Altura  │ Rotaciones│  Rot. Dobles │");
         System.out.println("├──────────────┼─────────┼──────────┼───────────┼──────────────┤");
-        
+
         String[][] resultados = new String[3][5];
         resultados[0] = obtenerEstadisticas(secuenciaCreciente, "Creciente");
         resultados[1] = obtenerEstadisticas(secuenciaDecreciente, "Decreciente");
         resultados[2] = obtenerEstadisticas(secuenciaAleatoria, "Aleatoria");
-        
+
         for (String[] fila : resultados) {
             System.out.printf("│ %-12s │ %7s │ %8s │ %9s │ %12s │%n",
-                            fila[0], fila[1], fila[2], fila[3], fila[4]);
+                    fila[0], fila[1], fila[2], fila[3], fila[4]);
         }
         System.out.println("└──────────────┴─────────┴──────────┴───────────┴──────────────┘");
 
         System.out.println("\n\nOBSERVACIONES:");
-        System.out.println("──────────────");
         System.out.println("1. SECUENCIA CRECIENTE/DECRECIENTE:");
         System.out.println("   - Peor caso para ABB sin balance (degeneraría en lista)");
         System.out.println("   - AVL lo maneja eficientemente con rotaciones");
@@ -372,49 +363,49 @@ public class Ej10 {
     private static void probarSecuencia(int[] secuencia, String nombre) {
         ArbolAVL10 avl = new ArbolAVL10();
         avl.resetearContadores();
-        
+
         System.out.println("\nInsertando " + secuencia.length + " elementos...\n");
-        
+
         boolean todasPasaron = true;
         int insertados = 0;
-        
+
         for (int i = 0; i < secuencia.length; i++) {
             int valor = secuencia[i];
             int nodosAntes = avl.contarNodos();
-            
+
             avl.insertar(valor);
-            
+
             int nodosDespues = avl.contarNodos();
             boolean fueInsertado = nodosDespues > nodosAntes;
-            
+
             if (fueInsertado) {
                 insertados++;
             }
-            
+
             // Ejecutar todos los tests
             boolean esAVL = avl.esAVL();
             boolean alturasOK = avl.alturasCorrectas();
             boolean ordenOK = avl.esOrdenCreciente();
-            
+
             boolean pasaron = esAVL && alturasOK && ordenOK;
-            
+
             String status = pasaron ? "✓" : "✗";
             String accion = fueInsertado ? "INSERTADO" : "DUPLICADO";
-            
+
             System.out.printf("%2d. Insertar %3d: %s [%-10s] esAVL=%s alturas=%s orden=%s (h=%d, n=%d)%n",
-                            i + 1, valor, status, accion,
-                            esAVL ? "✓" : "✗",
-                            alturasOK ? "✓" : "✗",
-                            ordenOK ? "✓" : "✗",
-                            avl.getAltura(),
-                            avl.contarNodos());
-            
+                    i + 1, valor, status, accion,
+                    esAVL ? "✓" : "✗",
+                    alturasOK ? "✓" : "✗",
+                    ordenOK ? "✓" : "✗",
+                    avl.getAltura(),
+                    avl.contarNodos());
+
             if (!pasaron) {
                 todasPasaron = false;
-                System.out.println("   ⚠️ ERROR DETECTADO!");
+                System.out.println("ERROR DETECTADO!");
             }
         }
-        
+
         // Resultados finales
         System.out.println("\n" + "─".repeat(70));
         System.out.println("RESULTADOS DE LA SECUENCIA " + nombre + ":");
@@ -427,9 +418,9 @@ public class Ej10 {
         System.out.println("  - Rotaciones simples:     " + avl.getRotacionesSimples());
         System.out.println("  - Rotaciones dobles:      " + avl.getRotacionesDobles());
         System.out.println("✓ Todas las pruebas:        " + (todasPasaron ? "PASARON ✓" : "FALLARON ✗"));
-        
+
         System.out.println("\nRecorrido in-order: " + avl.obtenerInorden());
-        
+
         System.out.println("\nEstructura del árbol final:");
         avl.mostrarArbol();
     }
@@ -440,17 +431,17 @@ public class Ej10 {
     private static String[] obtenerEstadisticas(int[] secuencia, String nombre) {
         ArbolAVL10 avl = new ArbolAVL10();
         avl.resetearContadores();
-        
+
         for (int valor : secuencia) {
             avl.insertar(valor);
         }
-        
-        return new String[]{
-            nombre,
-            String.valueOf(avl.contarNodos()),
-            String.valueOf(avl.getAltura()),
-            String.valueOf(avl.getTotalRotaciones()),
-            String.valueOf(avl.getRotacionesDobles())
+
+        return new String[] {
+                nombre,
+                String.valueOf(avl.contarNodos()),
+                String.valueOf(avl.getAltura()),
+                String.valueOf(avl.getTotalRotaciones()),
+                String.valueOf(avl.getRotacionesDobles())
         };
     }
 
@@ -475,12 +466,12 @@ public class Ej10 {
     private static int[] generarSecuenciaAleatoria(int n) {
         Random rand = new Random(42); // Semilla fija para reproducibilidad
         int[] secuencia = new int[n];
-        
+
         for (int i = 0; i < n; i++) {
             // Generar números en rango [1, 15] para asegurar repetidos
             secuencia[i] = rand.nextInt(15) + 1;
         }
-        
+
         return secuencia;
     }
 
@@ -488,7 +479,8 @@ public class Ej10 {
         System.out.print("[");
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i]);
-            if (i < arr.length - 1) System.out.print(", ");
+            if (i < arr.length - 1)
+                System.out.print(", ");
         }
         System.out.println("]");
     }

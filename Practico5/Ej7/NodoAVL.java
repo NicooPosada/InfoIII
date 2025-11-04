@@ -1,6 +1,5 @@
 package Practico5.Ej7;
 
-// Archivo: NodoAVL.java
 class NodoAVL {
     int valor;
     int altura;

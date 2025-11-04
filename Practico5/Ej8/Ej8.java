@@ -52,15 +52,15 @@ class ArbolAVL8 {
     /**
      * ROTACIÓN SIMPLE DERECHA (Right Rotation)
      * 
-     * Antes:       n              Después:      x
-     *             / \                          / \
-     *            x   C                        A   n
-     *           / \                              / \
-     *          A   B                            B   C
+     * Antes: n Después: x
+     * / \ / \
+     * x C A n
+     * / \ / \
+     * A B B C
      */
     private NodoAVL8 rotacionDerecha(NodoAVL8 n) {
-        System.out.println("    → Ejecutando rotación DERECHA en nodo " + n.valor);
-        
+        System.out.println(" Ejecutando rotación DERECHA en nodo " + n.valor);
+
         NodoAVL8 x = n.izquierdo;
         NodoAVL8 B = x.derecho;
 
@@ -78,15 +78,15 @@ class ArbolAVL8 {
     /**
      * ROTACIÓN SIMPLE IZQUIERDA (Left Rotation)
      * 
-     * Antes:       n              Después:      y
-     *             / \                          / \
-     *            A   y                        n   C
-     *               / \                      / \
-     *              B   C                    A   B
+     * Antes: n Después: y
+     * / \ / \
+     * A y n C
+     * / \ / \
+     * B C A B
      */
     private NodoAVL8 rotacionIzquierda(NodoAVL8 n) {
-        System.out.println("    → Ejecutando rotación IZQUIERDA en nodo " + n.valor);
-        
+        System.out.println(" Ejecutando rotación IZQUIERDA en nodo " + n.valor);
+
         NodoAVL8 y = n.derecho;
         NodoAVL8 B = y.izquierdo;
 
@@ -105,61 +105,62 @@ class ArbolAVL8 {
      * ROTACIÓN DOBLE IZQUIERDA-DERECHA (LR - Left-Right Rotation)
      * 
      * JUSTIFICACIÓN:
-     * Cuando tenemos una configuración LR (hijo izquierdo tiene subárbol derecho pesado),
+     * Cuando tenemos una configuración LR (hijo izquierdo tiene subárbol derecho
+     * pesado),
      * necesitamos dos rotaciones simples para balancear:
      * 
      * 1. Primero, rotación IZQUIERDA en el hijo izquierdo (x)
-     *    Esto convierte la configuración LR en LL
+     * Esto convierte la configuración LR en LL
      * 
      * 2. Luego, rotación DERECHA en el nodo padre (n)
-     *    Esto balancea el árbol
+     * Esto balancea el árbol
      * 
      * PASO A PASO:
      * 
      * Estado inicial (LR):
-     *        n                FB(n) = +2
-     *       / \               FB(x) = -1
-     *      x   D              (desequilibrio LR)
-     *     / \
-     *    A   y
-     *       / \
-     *      B   C
+     * n FB(n) = +2
+     * / \ FB(x) = -1
+     * x D (desequilibrio LR)
+     * / \
+     * A y
+     * / \
+     * B C
      * 
      * Después de rotación IZQUIERDA en x:
-     *        n                FB(n) = +2
-     *       / \               FB(y) = +1
-     *      y   D              (desequilibrio LL)
-     *     / \
-     *    x   C
-     *   / \
-     *  A   B
+     * n FB(n) = +2
+     * / \ FB(y) = +1
+     * y D (desequilibrio LL)
+     * / \
+     * x C
+     * / \
+     * A B
      * 
      * Después de rotación DERECHA en n:
-     *        y                Balanceado!
-     *       / \
-     *      x   n
-     *     / \ / \
-     *    A  B C  D
+     * y Balanceado!
+     * / \
+     * x n
+     * / \ / \
+     * A B C D
      * 
      * @param n nodo con desequilibrio LR
      * @return nueva raíz del subárbol balanceado
      */
     public NodoAVL8 rotacionDobleIzquierdaDerecha(NodoAVL8 n) {
-        System.out.println("\n  🔄 ROTACIÓN DOBLE IZQUIERDA-DERECHA (LR) en nodo " + n.valor);
-        System.out.println("  Configuración: hijo izquierdo tiene subárbol derecho pesado");
-        
+        System.out.println("\n ROTACIÓN DOBLE IZQUIERDA-DERECHA (LR) en nodo " + n.valor);
+        System.out.println(" Configuración: hijo izquierdo tiene subárbol derecho pesado");
+
         // Paso 1: Rotación IZQUIERDA en el hijo izquierdo
         System.out.println("\n  Paso 1: Rotación IZQUIERDA en hijo izquierdo (" + n.izquierdo.valor + ")");
         n.izquierdo = rotacionIzquierda(n.izquierdo);
-        System.out.println("  → Configuración LR convertida a LL");
-        mostrarSubarbol(n, "    Después del paso 1");
-        
+        System.out.println(" Configuración LR convertida a LL");
+        mostrarSubarbol(n, " Después del paso 1");
+
         // Paso 2: Rotación DERECHA en el nodo padre
         System.out.println("\n  Paso 2: Rotación DERECHA en nodo padre (" + n.valor + ")");
         NodoAVL8 resultado = rotacionDerecha(n);
-        System.out.println("  → Árbol balanceado");
-        mostrarSubarbol(resultado, "    Después del paso 2");
-        
+        System.out.println(" Árbol balanceado");
+        mostrarSubarbol(resultado, " Después del paso 2");
+
         return resultado;
     }
 
@@ -192,25 +193,25 @@ class ArbolAVL8 {
 
         // Caso LR: Izquierdo-Derecho
         if (balance > 1 && factorBalance(nodo.izquierdo) < 0) {
-            System.out.println("\n⚠️ Desequilibrio LR detectado en nodo " + nodo.valor);
+            System.out.println("\n Desequilibrio LR detectado en nodo " + nodo.valor);
             return rotacionDobleIzquierdaDerecha(nodo);
         }
 
         // Caso LL: Izquierdo-Izquierdo
         if (balance > 1 && factorBalance(nodo.izquierdo) >= 0) {
-            System.out.println("\n⚠️ Desequilibrio LL detectado en nodo " + nodo.valor);
+            System.out.println("\n Desequilibrio LL detectado en nodo " + nodo.valor);
             return rotacionDerecha(nodo);
         }
 
         // Caso RR: Derecho-Derecho
         if (balance < -1 && factorBalance(nodo.derecho) <= 0) {
-            System.out.println("\n⚠️ Desequilibrio RR detectado en nodo " + nodo.valor);
+            System.out.println("\n Desequilibrio RR detectado en nodo " + nodo.valor);
             return rotacionIzquierda(nodo);
         }
 
         // Caso RL: Derecho-Izquierdo
         if (balance < -1 && factorBalance(nodo.derecho) > 0) {
-            System.out.println("\n⚠️ Desequilibrio RL detectado en nodo " + nodo.valor);
+            System.out.println("\n Desequilibrio RL detectado en nodo " + nodo.valor);
             nodo.derecho = rotacionDerecha(nodo.derecho);
             return rotacionIzquierda(nodo);
         }
@@ -220,15 +221,15 @@ class ArbolAVL8 {
 
     // Método para mostrar el árbol
     public void mostrarArbol() {
-        System.out.println("\nEstructura del árbol:");
+        System.out.println("\n Estructura del árbol:");
         mostrarArbol(raiz, "", true);
     }
 
     private void mostrarArbol(NodoAVL8 nodo, String prefijo, boolean esUltimo) {
         if (nodo != null) {
-            System.out.println(prefijo + (esUltimo ? "└── " : "├── ") + 
-                             nodo.valor + " (h=" + nodo.altura + ", FB=" + factorBalance(nodo) + ")");
-            
+            System.out.println(prefijo + (esUltimo ? "└── " : "├── ") +
+                    nodo.valor + " (h=" + nodo.altura + ", FB=" + factorBalance(nodo) + ")");
+
             if (nodo.izquierdo != null || nodo.derecho != null) {
                 mostrarArbol(nodo.izquierdo, prefijo + (esUltimo ? "    " : "│   "), false);
                 mostrarArbol(nodo.derecho, prefijo + (esUltimo ? "    " : "│   "), true);
@@ -265,15 +266,15 @@ public class Ej8 {
         // DEMOSTRACIÓN 1: Caso clásico LR
         System.out.println("--- DEMOSTRACIÓN 1: Caso clásico LR ---");
         ArbolAVL8 arbol1 = new ArbolAVL8();
-        
+
         System.out.println("\nInsertando: 30");
         arbol1.insertar(30);
         arbol1.mostrarArbol();
-        
+
         System.out.println("\nInsertando: 10");
         arbol1.insertar(10);
         arbol1.mostrarArbol();
-        
+
         System.out.println("\nInsertando: 20 (causará desequilibrio LR)");
         arbol1.insertar(20);
         arbol1.mostrarArbol();
@@ -283,21 +284,21 @@ public class Ej8 {
         System.out.println("\n\n--- DEMOSTRACIÓN 2: Validación del ejercicio 2 ---");
         System.out.println("Secuencia de inserción: 1, 2, 3, 4, 5, 6, 7");
         ArbolAVL8 arbol2 = new ArbolAVL8();
-        
-        int[] valores = {1, 2, 3, 4, 5, 6, 7};
+
+        int[] valores = { 1, 2, 3, 4, 5, 6, 7 };
         for (int val : valores) {
             System.out.println("\n>>> Insertando: " + val);
             arbol2.insertar(val);
             arbol2.mostrarArbol();
         }
-        
+
         System.out.println("\n=== ÁRBOL FINAL ===");
         arbol2.mostrarArbol();
         arbol2.inorden();
 
         // DEMOSTRACIÓN 3: Comparación de rotaciones
         System.out.println("\n\n--- DEMOSTRACIÓN 3: Comparación LR vs LL ---");
-        
+
         // Caso LR
         System.out.println("\nCaso LR (30, 10, 20):");
         ArbolAVL8 arbolLR = new ArbolAVL8();
@@ -308,7 +309,7 @@ public class Ej8 {
         arbolLR.insertar(20);
         System.out.println("\nDespués de insertar 20 (con rotación LR):");
         arbolLR.mostrarArbol();
-        
+
         // Caso LL
         System.out.println("\n\nCaso LL (30, 20, 10):");
         ArbolAVL8 arbolLL = new ArbolAVL8();
@@ -343,13 +344,13 @@ public class Ej8 {
         // DEMOSTRACIÓN 4: Caso complejo
         System.out.println("\n\n--- DEMOSTRACIÓN 4: Múltiples rotaciones LR ---");
         ArbolAVL8 arbol3 = new ArbolAVL8();
-        int[] valoresComplejos = {50, 25, 75, 10, 30, 60, 80, 5, 15, 27, 35};
-        
+        int[] valoresComplejos = { 50, 25, 75, 10, 30, 60, 80, 5, 15, 27, 35 };
+
         for (int val : valoresComplejos) {
             System.out.println("\n>>> Insertando: " + val);
             arbol3.insertar(val);
         }
-        
+
         System.out.println("\n=== ÁRBOL FINAL COMPLEJO ===");
         arbol3.mostrarArbol();
         arbol3.inorden();
