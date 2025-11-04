@@ -5,23 +5,23 @@ import java.util.Scanner;
 public class Main {
     private static SistemaTurnos sistema;
     private static Scanner scanner;
-    
+
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
         sistema = new SistemaTurnos();
-        
+
         // Cargar datos iniciales (Ejercicio 1)
         sistema.cargarDatosIniciales();
-        
+
         // Menú principal
         mostrarMenuPrincipal();
-        
+
         scanner.close();
     }
-    
+
     private static void mostrarMenuPrincipal() {
         boolean continuar = true;
-        
+
         while (continuar) {
             System.out.println("-------------------------------------------");
             System.out.println("MENÚ PRINCIPAL");
@@ -39,94 +39,75 @@ public class Main {
             System.out.println("0) Salir");
             System.out.println("-------------------------------------------");
             System.out.print("Seleccione una opción: ");
-            
+
             int opcion = scanner.nextInt();
             scanner.nextLine(); // Consumir salto de línea
-            
+
             System.out.println();
-            
+
             switch (opcion) {
-                case 1:
-                    verAgendaMedico();
-                    break;
-                case 2:
-                    buscarProximoTurno();
-                    break;
-                case 3:
-                    simularSalaEspera();
-                    break;
-                case 4:
-                    programarRecordatorios();
-                    break;
-                case 5:
-                    consultarIndicePacientes();
-                    break;
-                case 6:
-                    consolidarAgendas();
-                    break;
-                case 7:
-                    reportesOrdenamiento();
-                    break;
-                case 8:
-                    auditoriaUndoRedo();
-                    break;
-                case 9:
-                    planificadorQuirofano();
-                    break;
-                case 10:
-                    sistema.mostrarEstadisticas();
-                    break;
-                case 0:
+                case 1 -> verAgendaMedico();
+                case 2 -> buscarProximoTurno();
+                case 3 -> simularSalaEspera();
+                case 4 -> programarRecordatorios();
+                case 5 -> consultarIndicePacientes();
+                case 6 -> consolidarAgendas();
+                case 7 -> reportesOrdenamiento();
+                case 8 -> auditoriaUndoRedo();
+                case 9 -> planificadorQuirofano();
+                case 10 -> sistema.mostrarEstadisticas();
+                case 0 -> {
                     System.out.println("-------------------------------------------");
                     System.out.println("Fin de ejecución.");
                     System.out.println("-------------------------------------------");
                     continuar = false;
-                    break;
-                default:
-                    System.out.println("Opción inválida. Intente nuevamente.");
+                }
+                default -> System.out.println("Opción inválida. Intente nuevamente.");
             }
-            
+
             if (continuar) {
                 System.out.println("\nPresione ENTER para continuar...");
                 scanner.nextLine();
             }
         }
     }
-    
-    // ==================== EJERCICIO 1: Implementado en SistemaTurnos ====================
-    
-    // ==================== EJERCICIO 2: Ver agenda de un médico ====================
+
+    // ==================== EJERCICIO 1: Implementado en SistemaTurnos
+    // ====================
+
+    // ==================== EJERCICIO 2: Ver agenda de un médico
+    // ====================
     private static void verAgendaMedico() {
         System.out.println("-------------------------------------------");
         System.out.println("[VER AGENDA DE UN MÉDICO]");
         System.out.println("-------------------------------------------");
-        
+
         sistema.listarMedicos();
-        
+
         System.out.print("\nIngrese la matrícula del médico: ");
         String matricula = scanner.nextLine().toUpperCase();
-        
+
         sistema.verAgendaMedico(matricula);
     }
-    
+
     // ==================== EJERCICIO 3: Buscar próximo turno ====================
     private static void buscarProximoTurno() {
         System.out.println("-------------------------------------------");
         System.out.println("[BUSCAR PRÓXIMO TURNO DISPONIBLE]");
         System.out.println("-------------------------------------------");
-        
+
         sistema.listarMedicos();
-        
+
         System.out.print("\nIngrese la matrícula del médico: ");
         String matricula = scanner.nextLine().toUpperCase();
-        
+
         System.out.print("Duración del turno (minutos): ");
         int duracion = scanner.nextInt();
         scanner.nextLine();
-        
+
         sistema.buscarProximoTurno(matricula, duracion);
     }
-    
+
     // ==================== EJERCICIO 4: Sala de espera ====================
     private static void simularSalaEspera() {
         System.out.println("-------------------------------------------");
@@ -134,7 +115,7 @@ public class Main {
         System.out.println("-------------------------------------------");
         sistema.simularSalaEspera();
     }
-    
+
     // ==================== EJERCICIO 5: Recordatorios ====================
     private static void programarRecordatorios() {
         System.out.println("-------------------------------------------");
@@ -142,7 +123,7 @@ public class Main {
         System.out.println("-------------------------------------------");
         sistema.programarRecordatorios();
     }
-    
+
     // ==================== EJERCICIO 6: Índice pacientes ====================
     private static void consultarIndicePacientes() {
         System.out.println("-------------------------------------------");
@@ -150,7 +131,7 @@ public class Main {
         System.out.println("-------------------------------------------");
         sistema.consultarIndicePacientes();
     }
-    
+
     // ==================== EJERCICIO 7: Consolidar agendas ====================
     private static void consolidarAgendas() {
         System.out.println("-------------------------------------------");
@@ -158,7 +139,7 @@ public class Main {
         System.out.println("-------------------------------------------");
         sistema.consolidarAgendas();
     }
-    
+
     // ==================== EJERCICIO 8: Reportes ====================
     private static void reportesOrdenamiento() {
         System.out.println("-------------------------------------------");
@@ -166,7 +147,7 @@ public class Main {
         System.out.println("-------------------------------------------");
         sistema.reportesOrdenamiento();
     }
-    
+
     // ==================== EJERCICIO 9: Undo/Redo ====================
     private static void auditoriaUndoRedo() {
         System.out.println("-------------------------------------------");
@@ -174,7 +155,7 @@ public class Main {
         System.out.println("-------------------------------------------");
         sistema.auditoriaUndoRedo();
     }
-    
+
     // ==================== EJERCICIO 10: Quirófano ====================
     private static void planificadorQuirofano() {
         System.out.println("-------------------------------------------");
