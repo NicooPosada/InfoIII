@@ -9,16 +9,16 @@ public class Ej5 {
     // Método recursivo para convertir un número a su representación binaria
     public static String convertirABinario(int numero) {
         // Caso base: si el número es 0 o 1, la representación binaria es "0" o "1"
-        switch (numero) {
-            case 0:
-                return "0";
-            case 1:
-                return "1";
-            default:
+        return switch (numero) {
+            case 0 -> "0";
+            case 1 -> "1";
+            default -> {
                 // Recursión: dividir el número por 2 y concatenar el resto (bit)
-                return convertirABinario(numero / 2) + (numero % 2);
-        }
+                yield convertirABinario(numero / 2) + (numero % 2);
+            }
+        };
     }
+
     public static void main(String[] args) {
 
         int numero = 13;
