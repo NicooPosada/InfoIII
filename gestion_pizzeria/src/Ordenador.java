@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Ordenador {
 
-    // 1️⃣ Ordenamiento por tiempo de preparación - Inserción
+    // 1 Ordenamiento por tiempo de preparación - Inserción
     public void ordenPorTiempoInsercion(List<Pedido> pedidos) {
         for (int i = 1; i < pedidos.size(); i++) {
             Pedido actual = pedidos.get(i);
@@ -15,7 +15,7 @@ public class Ordenador {
         }
     }
 
-    // 2️⃣ Ordenamiento por precio - Shellsort
+    // 2 Ordenamiento por precio - Shellsort
     public void ordenPorPrecioShell(List<Pedido> pedidos) {
         int n = pedidos.size();
         for (int gap = n / 2; gap > 0; gap /= 2) {
@@ -30,7 +30,7 @@ public class Ordenador {
         }
     }
 
-    // 3️⃣ Ordenamiento por nombre - Quicksort
+    // 3 Ordenamiento por nombre - Quicksort
     public void ordenPorNombreQuick(List<Pedido> pedidos, int inicio, int fin) {
         if (inicio < fin) {
             int indiceParticion = particion(pedidos, inicio, fin);
