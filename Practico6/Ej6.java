@@ -65,9 +65,9 @@ class RBTree6<K extends Comparable<K>, V> {
             return NIL;
         }
 
-        RBNode6<K, V> p = z.parent;        // padre
-        RBNode6<K, V> g = p.parent;        // abuelo
-        RBNode6<K, V> tio;                 // tío
+        RBNode6<K, V> p = z.parent; // padre
+        RBNode6<K, V> g = p.parent; // abuelo
+        RBNode6<K, V> tio; // tío
 
         // Determinar quién es el tío
         if (p == g.left) {
@@ -78,14 +78,14 @@ class RBTree6<K extends Comparable<K>, V> {
 
         // Verificar que el tío sea rojo (condición para recoloreo)
         if (tio == NIL || tio.color == RBNode6.BLACK) {
-            System.out.println("  ⚠️ El tío no es rojo, no se puede aplicar recoloreo");
+            System.out.println("El tío no es rojo, no se puede aplicar recoloreo");
             return NIL;
         }
 
-        System.out.println("  🎨 Recoloreo #" + (++recolorCount));
-        System.out.println("    - Padre " + p.key + ": ROJO → NEGRO");
-        System.out.println("    - Tío " + tio.key + ": ROJO → NEGRO");
-        System.out.println("    - Abuelo " + g.key + ": NEGRO → ROJO");
+        System.out.println("Recoloreo #" + (++recolorCount));
+        System.out.println(" - Padre " + p.key + ": ROJO → NEGRO");
+        System.out.println(" - Tío " + tio.key + ": ROJO → NEGRO");
+        System.out.println(" - Abuelo " + g.key + ": NEGRO → ROJO");
 
         // Realizar el recoloreo
         p.color = RBNode6.BLACK;
@@ -93,7 +93,7 @@ class RBTree6<K extends Comparable<K>, V> {
         g.color = RBNode6.RED;
 
         // "Subir" la violación al abuelo
-        System.out.println("    - Subir z al abuelo: " + g.key);
+        System.out.println(" - Subir z al abuelo: " + g.key);
 
         return g; // Retornar el abuelo como nuevo z
     }
@@ -111,7 +111,7 @@ class RBTree6<K extends Comparable<K>, V> {
 
         while (z != NIL && z.parent != NIL && z.parent.color == RBNode6.RED) {
             RBNode6<K, V> p = z.parent;
-            
+
             // Si el padre es la raíz, no hay abuelo
             if (p.parent == NIL) {
                 break;
@@ -123,26 +123,27 @@ class RBTree6<K extends Comparable<K>, V> {
             // Solo procesar si el tío es rojo
             if (tio != NIL && tio.color == RBNode6.RED) {
                 z = recolorearTioRojo(z);
-                if (z == NIL) break;
+                if (z == NIL)
+                    break;
             } else {
-                System.out.println("  ⚠️ Tío negro detectado en z=" + z.key + ", se requieren rotaciones");
+                System.out.println("Tío negro detectado en z=" + z.key + ", se requieren rotaciones");
                 break;
             }
         }
 
         // IMPORTANTE: Asegurar que la raíz sea siempre negra
         if (root.color == RBNode6.RED) {
-            System.out.println("\n  🎨 Corrección final: Raíz " + root.key + " → NEGRO");
+            System.out.println("\nCorrección final: Raíz " + root.key + " → NEGRO");
             root.color = RBNode6.BLACK;
         }
 
-        System.out.println("\n✓ Fix Insert completado (" + recolorCount + " recoloreos)");
+        System.out.println("\nFix Insert completado (" + recolorCount + " recoloreos)");
     }
 
     // Método auxiliar para insertar nodos manualmente
     public RBNode6<K, V> insertSimple(K key, V value, boolean color) {
         RBNode6<K, V> newNode = new RBNode6<>(key, value, color, NIL);
-        
+
         if (root == NIL) {
             root = newNode;
             root.color = RBNode6.BLACK;
@@ -174,7 +175,7 @@ class RBTree6<K extends Comparable<K>, V> {
     // Inserción BST normal que devuelve el nodo insertado
     public RBNode6<K, V> insertBST(K key, V value) {
         RBNode6<K, V> newNode = new RBNode6<>(key, value, RBNode6.RED, NIL);
-        
+
         if (root == NIL) {
             root = newNode;
             root.color = RBNode6.BLACK;
@@ -214,9 +215,9 @@ class RBTree6<K extends Comparable<K>, V> {
 
     private void printTree(RBNode6<K, V> node, String prefix, boolean isTail) {
         if (node != NIL) {
-            System.out.println(prefix + (isTail ? "└── " : "├── ") + 
-                             node.key + "(" + node.value + "):" + (node.color == RBNode6.RED ? "R" : "N"));
-            
+            System.out.println(prefix + (isTail ? "└── " : "├── ") +
+                    node.key + "(" + node.value + "):" + (node.color == RBNode6.RED ? "R" : "N"));
+
             if (node.left != NIL || node.right != NIL) {
                 printTree(node.left, prefix + (isTail ? "    " : "│   "), false);
                 printTree(node.right, prefix + (isTail ? "    " : "│   "), true);
@@ -230,12 +231,13 @@ class RBTree6<K extends Comparable<K>, V> {
     }
 
     private int countRedViolations(RBNode6<K, V> node) {
-        if (node == NIL) return 0;
+        if (node == NIL)
+            return 0;
 
         int violations = 0;
         if (node.color == RBNode6.RED) {
             if ((node.left != NIL && node.left.color == RBNode6.RED) ||
-                (node.right != NIL && node.right.color == RBNode6.RED)) {
+                    (node.right != NIL && node.right.color == RBNode6.RED)) {
                 violations++;
             }
         }
@@ -255,23 +257,23 @@ public class Ej6 {
         RBTree6<Integer, String> tree1 = new RBTree6<>();
         /*
          * Árbol inicial (con violación):
-         *       10:N
-         *      /    \
-         *    5:R    15:R
-         *   /
-         *  3:R  <- violación
+         * 10:N
+         * / \
+         * 5:R 15:R
+         * /
+         * 3:R <- violación
          */
         tree1.insertSimple(10, "diez", RBNode6.BLACK);
         tree1.insertSimple(5, "cinco", RBNode6.RED);
         tree1.insertSimple(15, "quince", RBNode6.RED);
         RBNode6<Integer, String> z1 = tree1.insertSimple(3, "tres", RBNode6.RED);
-        
+
         System.out.println("ANTES del recoloreo:");
         tree1.printTree();
         System.out.println("Violaciones: " + tree1.countRedViolations());
-        
+
         tree1.fixInsertTioRojo(z1);
-        
+
         System.out.println("\nDESPUÉS del recoloreo:");
         tree1.printTree();
         System.out.println("Violaciones: " + tree1.countRedViolations());
@@ -292,13 +294,13 @@ public class Ej6 {
         RBNode6<Integer, String> z2 = tree2.insertSimple(3, "tres", RBNode6.RED);
         // Crear violación adicional
         tree2.insertSimple(7, "siete", RBNode6.RED);
-        
+
         System.out.println("ANTES del recoloreo:");
         tree2.printTree();
         System.out.println("Violaciones: " + tree2.countRedViolations());
-        
+
         tree2.fixInsertTioRojo(z2);
-        
+
         System.out.println("\nDESPUÉS del recoloreo:");
         tree2.printTree();
         System.out.println("Violaciones: " + tree2.countRedViolations());
@@ -306,22 +308,22 @@ public class Ej6 {
         // PRUEBA 3: Inserción completa con fix
         System.out.println("\n\n--- PRUEBA 3: Inserción con fix automático ---");
         RBTree6<Integer, String> tree3 = new RBTree6<>();
-        
-        int[] valores = {10, 5, 15, 3, 7, 12, 20, 1};
-        
+
+        int[] valores = { 10, 5, 15, 3, 7, 12, 20, 1 };
+
         for (int val : valores) {
             System.out.println("\n→ Insertando " + val);
             RBNode6<Integer, String> nodo = tree3.insertBST(val, "val_" + val);
             tree3.printTree();
-            
+
             // Si hay violación, aplicar fix
             if (nodo.parent != tree3.NIL && nodo.parent.color == RBNode6.RED) {
-                System.out.println("⚠️ Violación detectada!");
+                System.out.println("Violación detectada!");
                 tree3.fixInsertTioRojo(nodo);
                 tree3.printTree();
             }
         }
-        
+
         System.out.println("\n=== ÁRBOL FINAL ===");
         tree3.printTree();
         System.out.println("Violaciones restantes: " + tree3.countRedViolations());
@@ -333,19 +335,19 @@ public class Ej6 {
         tree4.insertSimple(10, "diez", RBNode6.BLACK);
         tree4.insertSimple(5, "cinco", RBNode6.RED);
         tree4.insertSimple(15, "quince", RBNode6.RED);
-        
+
         System.out.println("Árbol inicial:");
         tree4.printTree();
-        
+
         // Simular que la raíz se vuelve roja durante el proceso
         tree4.root.color = RBNode6.RED;
         System.out.println("\nRaíz forzada a ROJO:");
         tree4.printTree();
-        
+
         // Aplicar fix (debería corregir la raíz)
         RBNode6<Integer, String> z4 = tree4.insertSimple(3, "tres", RBNode6.RED);
         tree4.fixInsertTioRojo(z4);
-        
+
         System.out.println("\nDespués del fix:");
         tree4.printTree();
         System.out.println("Color de la raíz: " + (tree4.root.color == RBNode6.BLACK ? "NEGRO ✓" : "ROJO ✗"));

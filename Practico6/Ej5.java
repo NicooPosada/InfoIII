@@ -9,12 +9,12 @@ package Practico6;
 
 // Enumeración para los casos de fixInsert
 enum Caso {
-    TIO_ROJO,  // El tío es rojo -> Recoloreo
-    LL,        // Left-Left -> Rotación derecha simple
-    RR,        // Right-Right -> Rotación izquierda simple
-    LR,        // Left-Right -> Rotación doble (izquierda-derecha)
-    RL,        // Right-Left -> Rotación doble (derecha-izquierda)
-    NINGUNO    // No hay violación o caso especial
+    TIO_ROJO, // El tío es rojo -> Recoloreo
+    LL, // Left-Left -> Rotación derecha simple
+    RR, // Right-Right -> Rotación izquierda simple
+    LR, // Left-Right -> Rotación doble (izquierda-derecha)
+    RL, // Right-Left -> Rotación doble (derecha-izquierda)
+    NINGUNO // No hay violación o caso especial
 }
 
 // Clase que representa un nodo del árbol rojo-negro
@@ -60,7 +60,8 @@ class RBTree5<K extends Comparable<K>, V> {
 
     /**
      * Clasificador de caso para fixInsert
-     * Dado un nodo z (recién insertado o actual en el fix), determina qué caso aplicar
+     * Dado un nodo z (recién insertado o actual en el fix), determina qué caso
+     * aplicar
      * 
      * @param z nodo a clasificar (generalmente rojo con padre rojo)
      * @return el caso correspondiente
@@ -71,15 +72,15 @@ class RBTree5<K extends Comparable<K>, V> {
             return Caso.NINGUNO;
         }
 
-        RBNode5<K, V> p = z.parent;        // padre de z
-        
+        RBNode5<K, V> p = z.parent; // padre de z
+
         // Si el padre es la raíz, no hay abuelo
         if (p == root) {
             return Caso.NINGUNO;
         }
 
-        RBNode5<K, V> g = p.parent;        // abuelo de z
-        RBNode5<K, V> tio;                 // tío de z
+        RBNode5<K, V> g = p.parent; // abuelo de z
+        RBNode5<K, V> tio; // tío de z
 
         // Determinar quién es el tío (hermano del padre)
         if (p == g.left) {
@@ -120,51 +121,51 @@ class RBTree5<K extends Comparable<K>, V> {
     // Método para explicar el caso clasificado
     public void explicarCaso(RBNode5<K, V> z, Caso caso) {
         System.out.println("\n=== CLASIFICACIÓN DEL CASO ===");
-        System.out.println("Nodo z: " + z.key + " = " + z.value + " (color: " + (z.color == RBNode5.RED ? "ROJO" : "NEGRO") + ")");
-        
+        System.out.println(
+                "Nodo z: " + z.key + " = " + z.value + " (color: " + (z.color == RBNode5.RED ? "ROJO" : "NEGRO") + ")");
+
         if (z.parent != NIL) {
-            System.out.println("Padre p: " + z.parent.key + " = " + z.parent.value + " (color: " + (z.parent.color == RBNode5.RED ? "ROJO" : "NEGRO") + ")");
-            
+            System.out.println("Padre p: " + z.parent.key + " = " + z.parent.value + " (color: "
+                    + (z.parent.color == RBNode5.RED ? "ROJO" : "NEGRO") + ")");
+
             if (z.parent.parent != NIL) {
-                System.out.println("Abuelo g: " + z.parent.parent.key + " = " + z.parent.parent.value + " (color: " + (z.parent.parent.color == RBNode5.RED ? "ROJO" : "NEGRO") + ")");
-                
+                System.out.println("Abuelo g: " + z.parent.parent.key + " = " + z.parent.parent.value + " (color: "
+                        + (z.parent.parent.color == RBNode5.RED ? "ROJO" : "NEGRO") + ")");
+
                 RBNode5<K, V> tio = (z.parent == z.parent.parent.left) ? z.parent.parent.right : z.parent.parent.left;
-                System.out.println("Tío: " + (tio == NIL ? "NIL" : (tio.key + " = " + tio.value)) + " (color: " + (tio.color == RBNode5.RED ? "ROJO" : "NEGRO") + ")");
+                System.out.println("Tío: " + (tio == NIL ? "NIL" : (tio.key + " = " + tio.value)) + " (color: "
+                        + (tio.color == RBNode5.RED ? "ROJO" : "NEGRO") + ")");
             }
         }
-        
+
         System.out.println("\nCaso clasificado: " + caso);
-        
+
         switch (caso) {
-            case TIO_ROJO:
-                System.out.println("Acción: RECOLOREO (cambiar color de padre, tío y abuelo)");
-                break;
-            case LL:
+            case TIO_ROJO -> System.out.println("Acción: RECOLOREO (cambiar color de padre, tío y abuelo)");
+            case LL -> {
                 System.out.println("Acción: ROTACIÓN DERECHA simple sobre el abuelo");
                 System.out.println("Configuración: z-p-g alineados a la izquierda");
-                break;
-            case RR:
+            }
+            case RR -> {
                 System.out.println("Acción: ROTACIÓN IZQUIERDA simple sobre el abuelo");
                 System.out.println("Configuración: z-p-g alineados a la derecha");
-                break;
-            case LR:
+            }
+            case LR -> {
                 System.out.println("Acción: ROTACIÓN DOBLE (primero izquierda sobre p, luego derecha sobre g)");
                 System.out.println("Configuración: p izquierda de g, z derecha de p (forma de codo)");
-                break;
-            case RL:
+            }
+            case RL -> {
                 System.out.println("Acción: ROTACIÓN DOBLE (primero derecha sobre p, luego izquierda sobre g)");
                 System.out.println("Configuración: p derecha de g, z izquierda de p (forma de codo)");
-                break;
-            case NINGUNO:
-                System.out.println("Acción: No se requiere corrección");
-                break;
+            }
+            case NINGUNO -> System.out.println("Acción: No se requiere corrección");
         }
     }
 
     // Método auxiliar para insertar nodos manualmente (sin balanceo)
     public RBNode5<K, V> insertSimple(K key, V value, boolean color) {
         RBNode5<K, V> newNode = new RBNode5<>(key, value, color, NIL);
-        
+
         if (root == NIL) {
             root = newNode;
             return newNode;
@@ -200,9 +201,9 @@ class RBTree5<K extends Comparable<K>, V> {
 
     private void printTree(RBNode5<K, V> node, String prefix, boolean isTail) {
         if (node != NIL) {
-            System.out.println(prefix + (isTail ? "└── " : "├── ") + 
-                             node.key + "=" + node.value + ":" + (node.color == RBNode5.RED ? "R" : "N"));
-            
+            System.out.println(prefix + (isTail ? "└── " : "├── ") +
+                    node.key + "=" + node.value + ":" + (node.color == RBNode5.RED ? "R" : "N"));
+
             if (node.left != NIL || node.right != NIL) {
                 printTree(node.left, prefix + (isTail ? "    " : "│   "), false);
                 printTree(node.right, prefix + (isTail ? "    " : "│   "), true);
@@ -221,11 +222,11 @@ public class Ej5 {
         System.out.println("\n--- CASO TÍO ROJO ---");
         tree = new RBTree5<>();
         /*
-         *       10:N
-         *      /    \
-         *    5:R    15:R
-         *   /
-         *  3:R  <- z (violación: padre rojo)
+         * 10:N
+         * / \
+         * 5:R 15:R
+         * /
+         * 3:R <- z (violación: padre rojo)
          */
         tree.insertSimple(10, "diez", RBNode5.BLACK);
         tree.insertSimple(5, "cinco", RBNode5.RED);
@@ -239,11 +240,11 @@ public class Ej5 {
         System.out.println("\n\n--- CASO LL (Left-Left) ---");
         tree = new RBTree5<>();
         /*
-         *       10:N
-         *      /    \
-         *    5:R    15:N
-         *   /
-         *  3:R  <- z
+         * 10:N
+         * / \
+         * 5:R 15:N
+         * /
+         * 3:R <- z
          */
         tree.insertSimple(10, "diez", RBNode5.BLACK);
         tree.insertSimple(5, "cinco", RBNode5.RED);
@@ -257,11 +258,11 @@ public class Ej5 {
         System.out.println("\n\n--- CASO RR (Right-Right) ---");
         tree = new RBTree5<>();
         /*
-         *       10:N
-         *      /    \
-         *    5:N    15:R
-         *              \
-         *              20:R  <- z
+         * 10:N
+         * / \
+         * 5:N 15:R
+         * \
+         * 20:R <- z
          */
         tree.insertSimple(10, "diez", RBNode5.BLACK);
         tree.insertSimple(5, "cinco", RBNode5.BLACK);
@@ -275,11 +276,11 @@ public class Ej5 {
         System.out.println("\n\n--- CASO LR (Left-Right) ---");
         tree = new RBTree5<>();
         /*
-         *       10:N
-         *      /    \
-         *    5:R    15:N
-         *      \
-         *      7:R  <- z
+         * 10:N
+         * / \
+         * 5:R 15:N
+         * \
+         * 7:R <- z
          */
         tree.insertSimple(10, "diez", RBNode5.BLACK);
         tree.insertSimple(5, "cinco", RBNode5.RED);
@@ -293,11 +294,11 @@ public class Ej5 {
         System.out.println("\n\n--- CASO RL (Right-Left) ---");
         tree = new RBTree5<>();
         /*
-         *       10:N
-         *      /    \
-         *    5:N    15:R
-         *           /
-         *         12:R  <- z
+         * 10:N
+         * / \
+         * 5:N 15:R
+         * /
+         * 12:R <- z
          */
         tree.insertSimple(10, "diez", RBNode5.BLACK);
         tree.insertSimple(5, "cinco", RBNode5.BLACK);

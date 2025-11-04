@@ -79,9 +79,9 @@ class RBTree9<K extends Comparable<K>, V> {
      * Método auxiliar recursivo para la consulta por rango
      * Implementa un in-order acotado
      * 
-     * @param node nodo actual
-     * @param a límite inferior
-     * @param b límite superior
+     * @param node   nodo actual
+     * @param a      límite inferior
+     * @param b      límite superior
      * @param result lista donde se acumulan los resultados
      */
     private void rangeQueryHelper(RBNode9<K, V> node, K a, K b, List<K> result) {
@@ -90,33 +90,33 @@ class RBTree9<K extends Comparable<K>, V> {
         }
 
         nodesVisited++;
-        System.out.println("  Visitando nodo: " + node.key);
+        System.out.println(" Visitando nodo: " + node.key);
 
         int cmpA = node.key.compareTo(a); // comparar con límite inferior
         int cmpB = node.key.compareTo(b); // comparar con límite superior
 
         // Si node.key > a, puede haber valores en el subárbol izquierdo
         if (cmpA > 0) {
-            System.out.println("    → " + node.key + " > " + a + ", explorar izquierda");
+            System.out.println(" → " + node.key + " > " + a + ", explorar izquierda");
             rangeQueryHelper(node.left, a, b, result);
         } else {
-            System.out.println("    → " + node.key + " ≤ " + a + ", no explorar izquierda");
+            System.out.println(" → " + node.key + " ≤ " + a + ", no explorar izquierda");
         }
 
         // Si a ≤ node.key ≤ b, agregar a la lista
         if (cmpA >= 0 && cmpB <= 0) {
-            System.out.println("    ✓ " + node.key + " está en el rango [" + a + ", " + b + "]");
+            System.out.println(" ✓ " + node.key + " está en el rango [" + a + ", " + b + "]");
             result.add(node.key);
         } else {
-            System.out.println("    ✗ " + node.key + " NO está en el rango");
+            System.out.println(" ✗ " + node.key + " NO está en el rango");
         }
 
         // Si node.key < b, puede haber valores en el subárbol derecho
         if (cmpB < 0) {
-            System.out.println("    → " + node.key + " < " + b + ", explorar derecha");
+            System.out.println(" → " + node.key + " < " + b + ", explorar derecha");
             rangeQueryHelper(node.right, a, b, result);
         } else {
-            System.out.println("    → " + node.key + " ≥ " + b + ", no explorar derecha");
+            System.out.println(" → " + node.key + " ≥ " + b + ", no explorar derecha");
         }
     }
 
@@ -173,7 +173,7 @@ class RBTree9<K extends Comparable<K>, V> {
     // Inserción BST simple
     public void insertBST(K key, V value) {
         RBNode9<K, V> newNode = new RBNode9<>(key, value, RBNode9.RED, NIL);
-        
+
         if (root == NIL) {
             root = newNode;
             root.color = RBNode9.BLACK;
@@ -212,7 +212,7 @@ class RBTree9<K extends Comparable<K>, V> {
     private void printTree(RBNode9<K, V> node, String prefix, boolean isTail) {
         if (node != NIL) {
             System.out.println(prefix + (isTail ? "└── " : "├── ") + node.key);
-            
+
             if (node.left != NIL || node.right != NIL) {
                 printTree(node.left, prefix + (isTail ? "    " : "│   "), false);
                 printTree(node.right, prefix + (isTail ? "    " : "│   "), true);
@@ -226,7 +226,8 @@ class RBTree9<K extends Comparable<K>, V> {
     }
 
     private int countNodes(RBNode9<K, V> node) {
-        if (node == NIL) return 0;
+        if (node == NIL)
+            return 0;
         return 1 + countNodes(node.left) + countNodes(node.right);
     }
 }
@@ -237,9 +238,9 @@ public class Ej9 {
 
         // Crear árbol con valores del 1 al 15
         RBTree9<Integer, String> tree = new RBTree9<>();
-        
-        int[] valores = {8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15};
-        
+
+        int[] valores = { 8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15 };
+
         System.out.println("Insertando valores: ");
         for (int val : valores) {
             tree.insertBST(val, "val_" + val);
@@ -297,15 +298,15 @@ public class Ej9 {
         // PRUEBA 8: Comparación con recorrido completo
         System.out.println("\n--- PRUEBA 8: Comparación con inorder completo ---");
         System.out.println("Buscando rango [4, 10]...");
-        
+
         // Método optimizado
         List<Integer> resultOptimized = tree.rangeQuerySimple(4, 10);
         int visitedOptimized = tree.nodesVisited;
-        
+
         // Método no optimizado (recorrido completo)
         List<Integer> resultComplete = tree.inorderComplete();
         int visitedComplete = tree.nodesVisited;
-        
+
         // Filtrar manualmente
         List<Integer> filteredComplete = new ArrayList<>();
         for (Integer key : resultComplete) {
@@ -313,28 +314,28 @@ public class Ej9 {
                 filteredComplete.add(key);
             }
         }
-        
+
         System.out.println("Resultado optimizado: " + resultOptimized);
         System.out.println("Nodos visitados (optimizado): " + visitedOptimized);
         System.out.println("\nRecorrido completo: " + resultComplete);
         System.out.println("Nodos visitados (completo): " + visitedComplete);
         System.out.println("Resultado filtrado: " + filteredComplete);
         System.out.println("\nMejora: " + (visitedComplete - visitedOptimized) + " nodos menos visitados");
-        System.out.println("Porcentaje de eficiencia: " + 
-                         String.format("%.1f%%", (1.0 - (double)visitedOptimized/visitedComplete) * 100));
+        System.out.println("Porcentaje de eficiencia: " +
+                String.format("%.1f%%", (1.0 - (double) visitedOptimized / visitedComplete) * 100));
 
         // PRUEBA 9: Múltiples consultas
         System.out.println("\n\n--- PRUEBA 9: Tabla de múltiples consultas ---");
         System.out.println("┌──────────────┬─────────────────────┬───────────────┐");
         System.out.println("│    Rango     │      Resultado      │ Nodos visitados│");
         System.out.println("├──────────────┼─────────────────────┼───────────────┤");
-        
-        int[][] rangos = {{1, 5}, {3, 8}, {7, 11}, {10, 15}, {2, 14}};
-        
+
+        int[][] rangos = { { 1, 5 }, { 3, 8 }, { 7, 11 }, { 10, 15 }, { 2, 14 } };
+
         for (int[] rango : rangos) {
             List<Integer> resultado = tree.rangeQuerySimple(rango[0], rango[1]);
-            System.out.printf("│ [%2d, %2d]    │ %-19s │ %7d/%2d     │%n", 
-                            rango[0], rango[1], resultado, tree.nodesVisited, totalNodes);
+            System.out.printf("│ [%2d, %2d]    │ %-19s │ %7d/%2d     │%n",
+                    rango[0], rango[1], resultado, tree.nodesVisited, totalNodes);
         }
         System.out.println("└──────────────┴─────────────────────┴───────────────┘");
     }

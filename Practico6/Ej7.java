@@ -60,7 +60,7 @@ class RBTree7<K extends Comparable<K>, V> {
         }
 
         RBNode7<K, V> y = x.right;
-        
+
         x.right = y.left;
         if (y.left != NIL) {
             y.left.parent = x;
@@ -88,7 +88,7 @@ class RBTree7<K extends Comparable<K>, V> {
         }
 
         RBNode7<K, V> x = y.left;
-        
+
         y.left = x.right;
         if (x.right != NIL) {
             x.right.parent = y;
@@ -118,12 +118,12 @@ class RBTree7<K extends Comparable<K>, V> {
             return;
         }
 
-        RBNode7<K, V> p = z.parent;        // padre
-        RBNode7<K, V> g = p.parent;        // abuelo
+        RBNode7<K, V> p = z.parent; // padre
+        RBNode7<K, V> g = p.parent; // abuelo
 
         // Verificar que estamos en el lado izquierdo
         if (p != g.left) {
-            System.out.println("⚠️ Error: p no es hijo izquierdo de g");
+            System.out.println("Error: p no es hijo izquierdo de g");
             return;
         }
 
@@ -134,17 +134,17 @@ class RBTree7<K extends Comparable<K>, V> {
         if (z == p.right) {
             // CASO LR: z es hijo derecho de p
             System.out.println("Caso: LR (Left-Right)");
-            System.out.println("  Paso 1: rotateLeft(" + p.key + ") para convertir LR → LL");
-            
+            System.out.println(" Paso 1: rotateLeft(" + p.key + ") para convertir LR → LL");
+
             rotateLeft(p);
-            
+
             // Después de la rotación, z y p intercambian roles
             // Ahora z está donde estaba p, y p es hijo de z
             RBNode7<K, V> temp = p;
             p = z;
             z = temp;
-            
-            System.out.println("  Ahora: z=" + z.key + ", p=" + p.key);
+
+            System.out.println(" Ahora: z=" + z.key + ", p=" + p.key);
             printTree();
         } else {
             // CASO LL: z es hijo izquierdo de p
@@ -152,21 +152,21 @@ class RBTree7<K extends Comparable<K>, V> {
         }
 
         // En ambos casos, ahora tenemos configuración LL
-        System.out.println("  Paso 2: rotateRight(" + g.key + ")");
+        System.out.println(" Paso 2: rotateRight(" + g.key + ")");
         rotateRight(g);
         printTree();
 
         // Paso 3: Recolorear
-        System.out.println("  Paso 3: Recoloreo");
-        System.out.println("    - p (" + p.key + "): " + 
-                         (p.color == RBNode7.RED ? "ROJO" : "NEGRO") + " → NEGRO");
-        System.out.println("    - g (" + g.key + "): " + 
-                         (g.color == RBNode7.RED ? "ROJO" : "NEGRO") + " → ROJO");
-        
+        System.out.println(" Paso 3: Recoloreo");
+        System.out.println("  - p (" + p.key + "): " +
+                (p.color == RBNode7.RED ? "ROJO" : "NEGRO") + " → NEGRO");
+        System.out.println("  - g (" + g.key + "): " +
+                (g.color == RBNode7.RED ? "ROJO" : "NEGRO") + " → ROJO");
+
         p.color = RBNode7.BLACK;
         g.color = RBNode7.RED;
 
-        System.out.println("\n✓ Fix completado");
+        System.out.println("\nFix completado");
     }
 
     /**
@@ -174,20 +174,20 @@ class RBTree7<K extends Comparable<K>, V> {
      */
     public void fixInsertComplete(RBNode7<K, V> z) {
         System.out.println("\n=== INICIANDO FIX INSERT COMPLETO ===");
-        
+
         while (z != NIL && z != root && z.parent.color == RBNode7.RED) {
             RBNode7<K, V> p = z.parent;
-            
+
             if (p.parent == NIL) {
                 break; // p es la raíz
             }
-            
+
             RBNode7<K, V> g = p.parent;
-            
+
             if (p == g.left) {
                 // Lado izquierdo
                 RBNode7<K, V> tio = g.right;
-                
+
                 if (tio != NIL && tio.color == RBNode7.RED) {
                     // Caso: Tío rojo - Recoloreo
                     System.out.println("\nCaso: Tío rojo - Recoloreo");
@@ -203,7 +203,7 @@ class RBTree7<K extends Comparable<K>, V> {
             } else {
                 // Lado derecho (simétrico)
                 RBNode7<K, V> tio = g.left;
-                
+
                 if (tio != NIL && tio.color == RBNode7.RED) {
                     p.color = RBNode7.BLACK;
                     tio.color = RBNode7.BLACK;
@@ -211,21 +211,21 @@ class RBTree7<K extends Comparable<K>, V> {
                     z = g;
                 } else {
                     // Aquí iría fixInsertRightSide (simétrico)
-                    System.out.println("⚠️ Lado derecho - No implementado en este ejercicio");
+                    System.out.println("Lado derecho - No implementado en este ejercicio");
                     break;
                 }
             }
         }
-        
+
         // Asegurar que la raíz sea negra
         root.color = RBNode7.BLACK;
-        System.out.println("\n✓ Raíz asegurada como NEGRA");
+        System.out.println("\nRaíz asegurada como NEGRA");
     }
 
     // Método auxiliar para insertar nodos manualmente
     public RBNode7<K, V> insertSimple(K key, V value, boolean color) {
         RBNode7<K, V> newNode = new RBNode7<>(key, value, color, NIL);
-        
+
         if (root == NIL) {
             root = newNode;
             root.color = RBNode7.BLACK;
@@ -257,7 +257,7 @@ class RBTree7<K extends Comparable<K>, V> {
     // Inserción BST normal
     public RBNode7<K, V> insertBST(K key, V value) {
         RBNode7<K, V> newNode = new RBNode7<>(key, value, RBNode7.RED, NIL);
-        
+
         if (root == NIL) {
             root = newNode;
             root.color = RBNode7.BLACK;
@@ -297,9 +297,9 @@ class RBTree7<K extends Comparable<K>, V> {
 
     private void printTree(RBNode7<K, V> node, String prefix, boolean isTail) {
         if (node != NIL) {
-            System.out.println(prefix + (isTail ? "└── " : "├── ") + 
-                             node.key + ":" + node.value + ":" + (node.color == RBNode7.RED ? "R" : "N"));
-            
+            System.out.println(prefix + (isTail ? "└── " : "├── ") +
+                    node.key + ":" + node.value + ":" + (node.color == RBNode7.RED ? "R" : "N"));
+
             if (node.left != NIL || node.right != NIL) {
                 printTree(node.left, prefix + (isTail ? "    " : "│   "), false);
                 printTree(node.right, prefix + (isTail ? "    " : "│   "), true);
@@ -317,29 +317,29 @@ public class Ej7 {
         RBTree7<Integer, String> tree1 = new RBTree7<>();
         /*
          * Árbol inicial:
-         *       10:N
-         *      /    \
-         *    5:R    15:N
-         *   /
-         *  3:R  <- violación
+         * 10:N
+         * / \
+         * 5:R 15:N
+         * /
+         * 3:R <- violación
          * 
          * Después de rotateRight(10) y recoloreo:
-         *       5:N
-         *      /   \
-         *    3:R   10:R
-         *            \
-         *            15:N
+         * 5:N
+         * / \
+         * 3:R 10:R
+         * \
+         * 15:N
          */
         tree1.insertSimple(10, "diez", RBNode7.BLACK);
         tree1.insertSimple(5, "cinco", RBNode7.RED);
         tree1.insertSimple(15, "quince", RBNode7.BLACK);
         RBNode7<Integer, String> z1 = tree1.insertSimple(3, "tres", RBNode7.RED);
-        
+
         System.out.println("ANTES del fix:");
         tree1.printTree();
-        
+
         tree1.fixInsertLeftSide(z1);
-        
+
         System.out.println("\nDESPUÉS del fix:");
         tree1.printTree();
 
@@ -348,84 +348,84 @@ public class Ej7 {
         RBTree7<Integer, String> tree2 = new RBTree7<>();
         /*
          * Árbol inicial:
-         *       10:N
-         *      /    \
-         *    5:R    15:N
-         *      \
-         *      7:R  <- violación
+         * 10:N
+         * / \
+         * 5:R 15:N
+         * \
+         * 7:R <- violación
          * 
          * Paso 1 - rotateLeft(5):
-         *       10:N
-         *      /    \
-         *    7:R    15:N
-         *   /
-         *  5:R
+         * 10:N
+         * / \
+         * 7:R 15:N
+         * /
+         * 5:R
          * 
          * Paso 2 - rotateRight(10) y recoloreo:
-         *       7:N
-         *      /   \
-         *    5:R   10:R
-         *            \
-         *            15:N
+         * 7:N
+         * / \
+         * 5:R 10:R
+         * \
+         * 15:N
          */
         tree2.insertSimple(10, "diez", RBNode7.BLACK);
         tree2.insertSimple(5, "cinco", RBNode7.RED);
         tree2.insertSimple(15, "quince", RBNode7.BLACK);
         RBNode7<Integer, String> z2 = tree2.insertSimple(7, "siete", RBNode7.RED);
-        
+
         System.out.println("ANTES del fix:");
         tree2.printTree();
-        
+
         tree2.fixInsertLeftSide(z2);
-        
+
         System.out.println("\nDESPUÉS del fix:");
         tree2.printTree();
 
         // PRUEBA 3: Inserción completa con fix automático
         System.out.println("\n\n--- PRUEBA 3: Inserción completa con fix automático ---");
         RBTree7<Integer, String> tree3 = new RBTree7<>();
-        
-        int[] valores = {50, 25, 75, 10, 30, 5};
-        
+
+        int[] valores = { 50, 25, 75, 10, 30, 5 };
+
         for (int val : valores) {
-            System.out.println("\n→ Insertando " + val);
+            System.out.println("\nInsertando " + val);
             RBNode7<Integer, String> nodo = tree3.insertBST(val, "val_" + val);
             tree3.printTree();
-            
+
             // Si hay violación, aplicar fix
             if (nodo.parent != tree3.NIL && nodo.parent.color == RBNode7.RED) {
-                System.out.println("\n⚠️ Violación detectada!");
+                System.out.println("\nViolación detectada!");
                 tree3.fixInsertComplete(nodo);
                 tree3.printTree();
             }
         }
-        
+
         System.out.println("\n=== ÁRBOL FINAL ===");
         tree3.printTree();
 
         // PRUEBA 4: Comparación directa LL vs LR
         System.out.println("\n\n--- PRUEBA 4: Comparación LL vs LR ---");
-        
+
         // LL
         RBTree7<Integer, String> treeLL = new RBTree7<>();
         treeLL.insertSimple(30, "30", RBNode7.BLACK);
         treeLL.insertSimple(20, "20", RBNode7.RED);
         treeLL.insertSimple(40, "40", RBNode7.BLACK);
         RBNode7<Integer, String> zLL = treeLL.insertSimple(10, "10", RBNode7.RED);
-        
+
         System.out.println("Configuración LL - ANTES:");
         treeLL.printTree();
         treeLL.fixInsertLeftSide(zLL);
         System.out.println("\nConfiguración LL - DESPUÉS:");
         treeLL.printTree();
-        
+
         // LR
         RBTree7<Integer, String> treeLR = new RBTree7<>();
         treeLR.insertSimple(30, "30", RBNode7.BLACK);
         treeLR.insertSimple(20, "20", RBNode7.RED);
         treeLR.insertSimple(40, "40", RBNode7.BLACK);
         RBNode7<Integer, String> zLR = treeLR.insertSimple(25, "25", RBNode7.RED);
-        
+
         System.out.println("\n\nConfiguración LR - ANTES:");
         treeLR.printTree();
         treeLR.fixInsertLeftSide(zLR);

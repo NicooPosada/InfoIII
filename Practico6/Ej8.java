@@ -69,18 +69,18 @@ class RBTree8<K extends Comparable<K>, V> {
         // Caso 1: Si el nodo tiene subárbol derecho
         // El sucesor es el mínimo del subárbol derecho
         if (node.right != NIL) {
-            System.out.println("  → Tiene subárbol derecho, buscar mínimo");
+            System.out.println("Tiene subárbol derecho, buscar mínimo");
             return minimum(node.right);
         }
 
         // Caso 2: No tiene subárbol derecho
         // Sube por los padres hasta encontrar un nodo que sea hijo izquierdo
-        System.out.println("  → No tiene subárbol derecho, subir por padres");
+        System.out.println("No tiene subárbol derecho, subir por padres");
         RBNode8<K, V> y = node.parent;
         RBNode8<K, V> x = node;
 
         while (y != NIL && x == y.right) {
-            System.out.println("    Subiendo: " + y.key + " (x es hijo derecho)");
+            System.out.println(" Subiendo: " + y.key + " (x es hijo derecho)");
             x = y;
             y = y.parent;
         }
@@ -92,7 +92,8 @@ class RBTree8<K extends Comparable<K>, V> {
      * Encuentra el predecesor de un nodo (el anterior nodo más chico en orden)
      * 
      * Algoritmo:
-     * 1. Si el nodo tiene subárbol izquierdo, el predecesor es el máximo de ese subárbol
+     * 1. Si el nodo tiene subárbol izquierdo, el predecesor es el máximo de ese
+     * subárbol
      * 2. Si no, sube por los padres hasta encontrar un nodo que sea hijo derecho
      * 
      * @param node el nodo del cual encontrar el predecesor
@@ -106,18 +107,18 @@ class RBTree8<K extends Comparable<K>, V> {
         // Caso 1: Si el nodo tiene subárbol izquierdo
         // El predecesor es el máximo del subárbol izquierdo
         if (node.left != NIL) {
-            System.out.println("  → Tiene subárbol izquierdo, buscar máximo");
+            System.out.println(" Tiene subárbol izquierdo, buscar máximo");
             return maximum(node.left);
         }
 
         // Caso 2: No tiene subárbol izquierdo
         // Sube por los padres hasta encontrar un nodo que sea hijo derecho
-        System.out.println("  → No tiene subárbol izquierdo, subir por padres");
+        System.out.println(" No tiene subárbol izquierdo, subir por padres");
         RBNode8<K, V> y = node.parent;
         RBNode8<K, V> x = node;
 
         while (y != NIL && x == y.left) {
-            System.out.println("    Subiendo: " + y.key + " (x es hijo izquierdo)");
+            System.out.println(" Subiendo: " + y.key + " (x es hijo izquierdo)");
             x = y;
             y = y.parent;
         }
@@ -137,7 +138,7 @@ class RBTree8<K extends Comparable<K>, V> {
         }
 
         while (node.left != NIL) {
-            System.out.println("    Yendo a la izquierda: " + node.left.key);
+            System.out.println(" Yendo a la izquierda: " + node.left.key);
             node = node.left;
         }
 
@@ -156,7 +157,7 @@ class RBTree8<K extends Comparable<K>, V> {
         }
 
         while (node.right != NIL) {
-            System.out.println("    Yendo a la derecha: " + node.right.key);
+            System.out.println(" Yendo a la derecha: " + node.right.key);
             node = node.right;
         }
 
@@ -197,7 +198,7 @@ class RBTree8<K extends Comparable<K>, V> {
     // Inserción BST simple
     public RBNode8<K, V> insertBST(K key, V value) {
         RBNode8<K, V> newNode = new RBNode8<>(key, value, RBNode8.RED, NIL);
-        
+
         if (root == NIL) {
             root = newNode;
             root.color = RBNode8.BLACK;
@@ -237,9 +238,9 @@ class RBTree8<K extends Comparable<K>, V> {
 
     private void printTree(RBNode8<K, V> node, String prefix, boolean isTail) {
         if (node != NIL) {
-            System.out.println(prefix + (isTail ? "└── " : "├── ") + 
-                             node.key + ":" + node.value + ":" + (node.color == RBNode8.RED ? "R" : "N"));
-            
+            System.out.println(prefix + (isTail ? "└── " : "├── ") +
+                    node.key + ":" + node.value + ":" + (node.color == RBNode8.RED ? "R" : "N"));
+
             if (node.left != NIL || node.right != NIL) {
                 printTree(node.left, prefix + (isTail ? "    " : "│   "), false);
                 printTree(node.right, prefix + (isTail ? "    " : "│   "), true);
@@ -255,17 +256,17 @@ public class Ej8 {
         // PRUEBA 1: Árbol simple con {5, 10, 15}
         System.out.println("--- PRUEBA 1: Árbol simple {5, 10, 15} ---");
         RBTree8<Integer, String> tree1 = new RBTree8<>();
-        
+
         tree1.insertBST(10, "diez");
         tree1.insertBST(5, "cinco");
         tree1.insertBST(15, "quince");
-        
+
         tree1.printTree();
         tree1.inorderTraversal();
 
         // Probar successor
         System.out.println("\nSuccessor de cada nodo:");
-        for (int key : new int[]{5, 10, 15}) {
+        for (int key : new int[] { 5, 10, 15 }) {
             RBNode8<Integer, String> node = tree1.search(key);
             System.out.println("\nNodo: " + key);
             RBNode8<Integer, String> succ = tree1.successor(node);
@@ -274,7 +275,7 @@ public class Ej8 {
 
         // Probar predecessor
         System.out.println("\n\nPredecessor de cada nodo:");
-        for (int key : new int[]{5, 10, 15}) {
+        for (int key : new int[] { 5, 10, 15 }) {
             RBNode8<Integer, String> node = tree1.search(key);
             System.out.println("\nNodo: " + key);
             RBNode8<Integer, String> pred = tree1.predecessor(node);
@@ -284,18 +285,18 @@ public class Ej8 {
         // PRUEBA 2: Árbol más complejo
         System.out.println("\n\n--- PRUEBA 2: Árbol más complejo ---");
         RBTree8<Integer, String> tree2 = new RBTree8<>();
-        
-        int[] valores = {50, 25, 75, 10, 30, 60, 80, 5, 15, 27, 55, 65};
+
+        int[] valores = { 50, 25, 75, 10, 30, 60, 80, 5, 15, 27, 55, 65 };
         for (int val : valores) {
             tree2.insertBST(val, "val_" + val);
         }
-        
+
         tree2.printTree();
         tree2.inorderTraversal();
 
         // Probar casos especiales
         System.out.println("\n\nCasos especiales:");
-        
+
         // Caso: Nodo con subárbol derecho
         System.out.println("\n1. Nodo 25 (tiene subárbol derecho):");
         RBNode8<Integer, String> node25 = tree2.search(25);
@@ -359,16 +360,16 @@ public class Ej8 {
         System.out.println("┌──────────┬────────────┬──────────────┐");
         System.out.println("│   Nodo   │  Successor │  Predecessor │");
         System.out.println("├──────────┼────────────┼──────────────┤");
-        
-        for (int val : new int[]{5, 10, 25, 27, 30, 50, 55, 60, 65, 75, 80}) {
+
+        for (int val : new int[] { 5, 10, 25, 27, 30, 50, 55, 60, 65, 75, 80 }) {
             RBNode8<Integer, String> node = tree2.search(val);
             if (node != tree2.NIL) {
                 RBNode8<Integer, String> succ = tree2.successor(node);
                 RBNode8<Integer, String> pred = tree2.predecessor(node);
-                System.out.printf("│ %8d │ %10s │ %12s │%n", 
-                                val,
-                                (succ != tree2.NIL ? succ.key : "NIL"),
-                                (pred != tree2.NIL ? pred.key : "NIL"));
+                System.out.printf("│ %8d │ %10s │ %12s │%n",
+                        val,
+                        (succ != tree2.NIL ? succ.key : "NIL"),
+                        (pred != tree2.NIL ? pred.key : "NIL"));
             }
         }
         System.out.println("└──────────┴────────────┴──────────────┘");
